@@ -938,13 +938,16 @@ def admin_review_delete(request, activity_id, timestamp, participant_email):
     user_type = request.session.get('type')
 
     if user_type == 'administrator' and user_email is not False:
-        time = datetime.datetime.strptime(timestamp,'%Y-%m-%d %H:%M:%S')
-        time = datetime.datetime.strftime('%Y-%m-%d %H:%M:%S')
-
+        if timestamp[-4:] == 'a.m.':
+            timestamp = timestamp[:-4] + 'AM'
+        else:
+            timestamp = timestamp[:-4] + 'PM'
+        time = datetime.datetime.strptime(timestamp,'%B %d, %Y, %I:%M %p')
+        time = time.strftime('%Y-%m-%d %H:%M:%S')
         with connection.cursor() as cursor:
 
-            cursor.execute('DELETE FROM review WHERE activity_id = %s AND timestamp = %s AND participant = %s', [
-                activity_id, time, participant_email])
+            cursor.execute('DELETE FROM review WHERE activity_id = %s AND participant = %s', [
+                activity_id, participant_email])
 
         return HttpResponseRedirect(reverse('admin_review'))
 
@@ -992,13 +995,17 @@ def admin_report_delete(request, submitter_email, timestamp):
     user_type = request.session.get('type')
 
     if user_type == 'administrator' and user_email is not False:
-        time = datetime.datetime.strptime(timestamp,'%Y-%m-%d %H:%M:%S')
+        if timestamp[-4:] == 'a.m.':
+            timestamp = timestamp[:-4] + 'AM'
+        else:
+            timestamp = timestamp[:-4] + 'PM'
+        time = datetime.datetime.strptime(timestamp,'%B %d, %Y, %I:%M %p')
         time = time.strftime('%Y-%m-%d %H:%M:%S')
 
         with connection.cursor() as cursor:
 
-            cursor.execute('DELETE FROM report WHERE submitter = %s AND timestamp = %s', [
-                            submitter_email, time])
+            cursor.execute('DELETE FROM report WHERE submitter = %s', [
+                            submitter_email])
 
         return HttpResponseRedirect(reverse('admin_report'))
 

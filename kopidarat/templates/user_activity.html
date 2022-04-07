@@ -7,22 +7,27 @@
 </head>
 
 <body>
-  <h1>Hello {{user_fullname}}!</h1>
-  <br />
-  <br />
-
-  <button><a href="/"> Back to Main Page </a></button>
-
+  <br/><br>
+  <table border="1">
+    <thead>
+      <th><a href="{% url 'index' %}">For You</a></th>
+      <th><a href="{% url 'all_activities' %}">All Activities</a></th>
+      <th><a href="{% url 'create_activity' %}"> New Activity </a></th>
+       <th><a href="{% url 'logout' %}"> Logout </a></th>
+    </thead>
+  </table>
   {% if message %}
   <div>{{ message }}</div>
   {% endif %}
-
+  
+  <h1>Hello {{user_fullname}}!</h1>
   <h2>Upcoming Activities that you created</h2>
   {% if inviter_future_list_empty%}
     You have not organised any upcoming activities.
   {% else %}
+
   <div class="table-wrap">
-    <table class="tableoverflow">
+    <table >
       {% for activity in inviter_future_list %}
       <tr>
         <td class="overflow_td">
@@ -60,7 +65,7 @@
     You have not joined any upcoming activities.
   {% else %}
   <div class="table-wrap">
-    <table class="tableoverflow">
+    <table >
       {% for activity in joined_future_activities_list %}
       <tr>
         <td class="overflow_td">
@@ -89,7 +94,7 @@
     You have not organised any activities in the past.
   {% else %}
   <div class="table-wrap">
-  <table class="tableoverflow">
+  <table >
     {% for activity in inviter_past_list %}
     <tr>
       <td class="overflow_td">
@@ -122,7 +127,7 @@
   {% else %}
   <br />
   <div class="table-wrap">
-    <table class="tableoverflow">
+    <table >
       {% for activity in joined_past_activities_list %}
       <tr>
         <td class="overflow_td">
@@ -156,13 +161,15 @@
     You have not written any reviews.
   {% else %}
   <br />
-  <table border="1">
+  <div class="content-table">
+  <table>
     <thead>
       <th>Activity ID</th>
       <th>Timestamp</th>
       <th>Rating</th>
       <th>Comment</th>
     </thead>
+    <tbody>
     {% for review in reviews_list %}
     <tr>
       <td>{{ review.0 }}</td>
@@ -171,7 +178,9 @@
       <td>{{ review.3 }}</td>
     </tr>
     {% endfor %}
+    </tbody>
   </table>
+</div>
   {% endif %}
 
   <h2>Your Reports</h2>
@@ -179,7 +188,8 @@
     You have not written any reports.
   {% else %}
   <br />
-  <table border="1">
+  <div class="content-table">
+  <table>
     <thead>
       <th>Timestamp</th>
       <th>User Reported</th>
@@ -194,8 +204,9 @@
       <td>{{ report.3 }}</td>
     </tr>
     {% endfor %}
+    </tbody>
   </table>
   {% endif %}
 </body>
-
+</div>
 </html>

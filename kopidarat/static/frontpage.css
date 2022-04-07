@@ -20,7 +20,6 @@ h2 {
 }
 .container {
     max-width: 500px;
-    margin: auto;
 }
 a:hover {
     color: #17706c;
@@ -39,8 +38,8 @@ a:hover {
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-left: auto px;
-    margin-right: auto px;
+    margin-left: 325px;
+    margin-right: 100px;
     margin-bottom: 100px;
     margin-top: 100px;
 }

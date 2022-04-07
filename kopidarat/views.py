@@ -537,7 +537,7 @@ def admin_index(request):
             list_of_reviewed_activities = cursor.fetchall()
 
             # Select the 5 most reported users (counted if the severity is medium or high only)
-            cursor.execute("SELECT u.username, COUNT(r.comment) AS total_reports FROM users u, report r WHERE u.email = r.report_user AND (r.severity = 'medium' OR r.severity = 'high') GROUP BY u.username ORDER BY total_reports DESC, u.username ASC LIMIT 5")
+            cursor.execute("SELECT u.username, COUNT(r.comment) AS total_reports FROM users u, report r WHERE u.email = r.report_user AND (r.severity = 'Medium' OR r.severity = 'High') GROUP BY u.username ORDER BY total_reports DESC, u.username ASC LIMIT 5")
             list_of_user_reports = cursor.fetchall()
 
             # Select activities created by administrators

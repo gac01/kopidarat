@@ -1053,7 +1053,7 @@ def login_view(request):
     '''
     # Check if user is already signed in
     if request.session.get("email", False) is not False:
-        if request.session["type"] == 'administrator':
+        if request.session.get('type') == 'administrator':
             return HttpResponseRedirect(reverse("admin_index"))
         else:
             return HttpResponseRedirect(reverse("index"))
@@ -1094,7 +1094,7 @@ def login_view(request):
                     request.session["full_name"] = full_name
                     request.session["type"] = type
 
-            if request.session["type"] == 'administrator':
+            if request.session.get('type') == 'administrator':
                 return HttpResponseRedirect(reverse("admin_index"))
             else:
                 return HttpResponseRedirect(reverse("index"))

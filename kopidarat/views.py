@@ -1015,7 +1015,11 @@ def frontpage(request):
     '''
     user_email = request.session.get("email", False)
     if user_email is not False:
-        return HttpResponseRedirect(reverse('index'))
+        if request.session.get('type') == 'administrator':
+            return HttpResponseRedirect(reverse("admin_index"))
+        else:
+            return HttpResponseRedirect(reverse("index"))
+
     context = {}
     with connection.cursor() as cursor:
         cursor.execute('SELECT COUNT(*) FROM activity')

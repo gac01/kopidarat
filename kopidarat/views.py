@@ -938,7 +938,7 @@ def admin_review_delete(request, activity_id, timestamp, participant_email):
     user_type = request.session.get('type')
 
     if user_type == 'administrator' and user_email is not False:
-        time = datetime.datetime.strptime(timestamp)
+        time = datetime.datetime.strptime(timestamp,'%Y-%m-%d %H:%M:%S')
         time = datetime.datetime.strftime('%Y-%m-%d %H:%M:%S')
 
         with connection.cursor() as cursor:
@@ -992,7 +992,7 @@ def admin_report_delete(request, submitter_email, timestamp):
     user_type = request.session.get('type')
 
     if user_type == 'administrator' and user_email is not False:
-        time = datetime.datetime.strptime(timestamp)
+        time = datetime.datetime.strptime(timestamp,'%Y-%m-%d %H:%M:%S')
         time = time.strftime('%Y-%m-%d %H:%M:%S')
 
         with connection.cursor() as cursor:

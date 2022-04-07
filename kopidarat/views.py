@@ -577,6 +577,10 @@ def admin_user(request):
             list_of_users = cursor.fetchall()
 
         context['list_of_users'] = list_of_users
+        message = request.session.get('message',False)
+        if message is not False:
+            context['message'] = message
+            del context['message']
 
         return render(request, 'admin_user.html', context)
     else:

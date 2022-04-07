@@ -18,16 +18,13 @@
     <h2> Recommended For You</h2>
 
     {% if message %}
-    <div id="overlay"></div>
-    <div class="popup">
-      <div class="popupcontent">{{message}}</div>
-    </div>
+      <div>{{message}}</div>
     {% endif %}
-
+    <br/>
+    
     {% if empty %}
     We cannot recommend any upcoming activities for you at this moment. Hop on to All Activities and join more activities so we can get to know your taste better!
     {% else %}
-    <br/>
     <div class="table-wrap">
       <table>
         {% for activity in recommended_activities %}

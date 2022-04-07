@@ -2,7 +2,11 @@
 <link rel="stylesheet" type="text/css" href="{% static 'admin_user.css' %}" />
 <html>
   <body>
+    
     <h2>List of users using the app</h2>
+    {% if message %}
+  <div>{{ message }}</div>
+  {% endif %}
     <br />
     <div class="text1">
     <a href="/admin_user_create"> Create new user </a>

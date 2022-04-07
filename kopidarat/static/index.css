@@ -152,7 +152,8 @@ option {
 }
 
 .table-wrap {
-height: 1000px;
+height: 400px;
 overflow-y: scroll;
 display: inline-block;
+min-width: 1000px;
 }

@@ -109,7 +109,7 @@ def all_activities(request,*kwargs):
         'full_name':request.session.get("full_name"),
         'categories':categories,
         'message':message}
-        return render(request, "join.html", context)
+        return render(request, "all_activities.html", context)
     else:
         return HttpResponseRedirect(reverse("frontpage"))
 

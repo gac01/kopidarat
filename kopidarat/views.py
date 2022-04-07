@@ -307,7 +307,7 @@ def user_activity(request):
                 context["inviter_future_list_empty"]=inviter_future_list_empty
 
             # Get the table of upcoming activities created by other user where the user has signed up for
-            cursor.execute('SELECT a.activity_id, u.full_name, a.category, a.activity_name, a.start_date_time, a.end_date_time, a.venue, count_participant.count, a.capacity FROM joins j, activity a, users u, (SELECT j1.activity_id, COUNT(j1.participant) as count FROM activity a1, joins j1 WHERE j1.activity_id = a1.activity_id GROUP BY j1.activity_id) AS count_participant WHERE a.inviter = u.email AND a.inviter<>%s AND count_participant.activity_id = a.activity_id AND j.participant = %s AND NOW() <= a.start_date_time ORDER BY a.start_date_time ASC', [user_email,user_email])
+            cursor.execute('SELECT DISTINCT a.activity_id, u.full_name, a.category, a.activity_name, a.start_date_time, a.end_date_time, a.venue, count_participant.count, a.capacity FROM joins j, activity a, users u, (SELECT j1.activity_id, COUNT(j1.participant) as count FROM activity a1, joins j1 WHERE j1.activity_id = a1.activity_id GROUP BY j1.activity_id) AS count_participant WHERE a.inviter = u.email AND a.inviter<>%s AND count_participant.activity_id = a.activity_id AND j.participant = %s AND NOW() <= a.start_date_time ORDER BY a.start_date_time ASC', [user_email,user_email])
             
             upcoming_activities_list = cursor.fetchall()
             if len(upcoming_activities_list)>0:

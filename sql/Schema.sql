@@ -85,7 +85,7 @@ CREATE TABLE IF NOT EXISTS report (
   DEFERRABLE INITIALLY DEFERRED
   NOT NULL,
   comment VARCHAR(4096) NOT NULL CHECK (comment <> '' ),
-  severity VARCHAR(6) NOT NULL CHECK (severity = 'low' OR severity = 'medium' OR severity = 'high'),
+  severity VARCHAR(6) NOT NULL CHECK (severity = 'Low' OR severity = 'Medium' OR severity = 'High'),
   PRIMARY KEY (submitter,timestamp)
 );
 

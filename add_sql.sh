@@ -31,7 +31,6 @@ URI="postgres://$DB_USER:$DB_PASSWORD@$DB_HOST:$DB_PORT/$DB_NAME"
 #psql ${URI} -f sql/DeleteTableContents.sql
 psql ${URI} -f sql/DropTablesTriggers.sql
 psql ${URI} -f sql/Schema.sql
-psql ${URI} -f sql/ProceduresTriggers.sql
 psql ${URI} -f sql/Users.sql
 psql ${URI} -f sql/Member.sql
 psql ${URI} -f sql/Administrator.sql
@@ -42,6 +41,7 @@ psql ${URI} -f sql/RandomComments.sql
 psql ${URI} -f sql/RandomReports.sql
 psql ${URI} -f sql/Review.sql
 psql ${URI} -f sql/Report.sql
+psql ${URI} -f sql/ProceduresTriggers.sql
 # psql ${URI} -f sql/ProceduresTriggers.sql if the insertion of data is problematic, run this at the last one
 
 

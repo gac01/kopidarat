@@ -260,7 +260,7 @@ def join(request, activity_id):
                 string_message=str(e)
                 message=string_message.split(".",1)[0]+"."
             
-        return index(request,message)
+        return all_activities(request,message)
     else:
         HttpResponseRedirect("index")
 

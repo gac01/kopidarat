@@ -30,7 +30,7 @@
             <td>
               <a
                 class="button"
-                href="{% url 'admin_report_delete' submitter_email=report.0 timestamp=report.1 %}"
+                href="admin_report_delete/{{ report.0 }}/{{ report.1 }}"
                 class="text-decoration-none"
               >
                 Delete

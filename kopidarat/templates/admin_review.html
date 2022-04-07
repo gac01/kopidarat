@@ -30,7 +30,7 @@
             <td>
               <a
                 class="button"
-                href="{% url 'admin_review_delete' activity_id=review.0 timestamp=review.1 participant_email=review.2 %}"
+                href="admin_review_delete/{{ review.0 }}/{{ review.1 }}/{{ review.2 }}"
                 class="text-decoration-none"
               >
                 Delete

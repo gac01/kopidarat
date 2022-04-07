@@ -886,12 +886,10 @@ def admin_activity_delete(request, activity_id):
 
     if user_type == 'administrator' and user_email is not False:
 
-        if request.method == 'POST':
+        with connection.cursor() as cursor:
 
-            with connection.cursor() as cursor:
-
-                cursor.execute(
-                    'DELETE FROM activity WHERE activity_id = %s', [activity_id])
+            cursor.execute(
+                'DELETE FROM activity WHERE activity_id = %s', [activity_id])
 
         return HttpResponseRedirect(reverse('admin_activity'))
 
@@ -941,12 +939,10 @@ def admin_review_delete(request, activity_id, timestamp, participant_email):
 
     if user_type == 'administrator' and user_email is not False:
 
-        if request.method == 'POST':
+        with connection.cursor() as cursor:
 
-            with connection.cursor() as cursor:
-
-                cursor.execute('DELETE FROM review WHERE activity_id = %s AND timestamp = %s AND participant = %s', [
-                    activity_id, timestamp, participant_email])
+            cursor.execute('DELETE FROM review WHERE activity_id = %s AND timestamp = %s AND participant = %s', [
+                activity_id, timestamp, participant_email])
 
         return HttpResponseRedirect(reverse('admin_review'))
 
@@ -995,12 +991,10 @@ def admin_report_delete(request, submitter_email, timestamp):
 
     if user_type == 'administrator' and user_email is not False:
 
-        if request.method == 'POST':
+        with connection.cursor() as cursor:
 
-            with connection.cursor() as cursor:
-
-                cursor.execute('DELETE FROM report WHERE submitter = %s AND timestamp = %s', [
-                               submitter_email, timestamp])
+            cursor.execute('DELETE FROM report WHERE submitter = %s AND timestamp = %s', [
+                            submitter_email, timestamp])
 
         return HttpResponseRedirect(reverse('admin_report'))
 

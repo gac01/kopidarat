@@ -1,6 +1,6 @@
 INSERT INTO report (submitter, timestamp, report_user, comment, severity)
 (
-	SELECT j1.participant, (a.start_date_time + '8 hours' + RANDOM() * (NOW()-a.start_date_time)) AS random_timestamp, j2.participant, (SELECT comment FROM random_report ORDER BY RANDOM() LIMIT 1) AS comment, 'low'
+	SELECT j1.participant, (a.start_date_time + '8 hours' + RANDOM() * (NOW()-a.start_date_time)) AS random_timestamp, j2.participant, (SELECT comment FROM random_report ORDER BY RANDOM() LIMIT 1) AS comment, 'Low'
 	FROM joins j1, joins j2, activity a
 	WHERE j1.activity_id = a.activity_id
 	AND j2.activity_id = a.activity_id
@@ -10,7 +10,7 @@ INSERT INTO report (submitter, timestamp, report_user, comment, severity)
 )
 UNION
 (
-	SELECT j1.participant, (a.start_date_time + '8 hours' + RANDOM() * (NOW()-a.start_date_time)) AS random_timestamp, j2.participant, (SELECT comment FROM random_report ORDER BY RANDOM() LIMIT 1) AS comment, 'medium'
+	SELECT j1.participant, (a.start_date_time + '8 hours' + RANDOM() * (NOW()-a.start_date_time)) AS random_timestamp, j2.participant, (SELECT comment FROM random_report ORDER BY RANDOM() LIMIT 1) AS comment, 'Medium'
 	FROM joins j1, joins j2, activity a
 	WHERE j1.activity_id = a.activity_id
 	AND j2.activity_id = a.activity_id
@@ -20,7 +20,7 @@ UNION
 )
 UNION
 (
-	SELECT j1.participant, (a.start_date_time + '8 hours' + RANDOM() * (NOW()-a.start_date_time)) AS random_timestamp, j2.participant, (SELECT comment FROM random_report ORDER BY RANDOM() LIMIT 1) AS comment, 'high'
+	SELECT j1.participant, (a.start_date_time + '8 hours' + RANDOM() * (NOW()-a.start_date_time)) AS random_timestamp, j2.participant, (SELECT comment FROM random_report ORDER BY RANDOM() LIMIT 1) AS comment, 'High'
 	FROM joins j1, joins j2, activity a
 	WHERE j1.activity_id = a.activity_id
 	AND j2.activity_id = a.activity_id

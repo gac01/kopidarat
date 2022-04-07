@@ -39,7 +39,7 @@ urlpatterns = [
     path('admin_activity_edit/<int:activity_id>', views.admin_activity_edit, name='admin_activity_edit'),
     path('admin_activity_delete/<int:activity_id>', views.admin_activity_delete, name='admin_activity_delete'),
     path('admin_review', views.admin_review, name='admin_review'),
-    path('admin_activity_delete/<int:activity_id>/<str:timestamp>/<str:participant_email>', views.admin_review_delete, name='admin_review_delete'),
+    path('admin_review_delete/<int:activity_id>/<str:timestamp>/<str:participant_email>', views.admin_review_delete, name='admin_review_delete'),
     path('admin_report', views.admin_report, name='admin_report'),
     path('admin_report_delete/<str:submitter_email>/<str:timestamp>', views.admin_report_delete, name='admin_report_delete'),
     

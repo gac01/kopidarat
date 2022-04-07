@@ -938,11 +938,13 @@ def admin_review_delete(request, activity_id, timestamp, participant_email):
     user_type = request.session.get('type')
 
     if user_type == 'administrator' and user_email is not False:
+        time = datetime.datetime.strptime(timestamp)
+        time = datetime.datetime.strftime('%Y-%m-%d %H:%M:%S')
 
         with connection.cursor() as cursor:
 
             cursor.execute('DELETE FROM review WHERE activity_id = %s AND timestamp = %s AND participant = %s', [
-                activity_id, timestamp, participant_email])
+                activity_id, time, participant_email])
 
         return HttpResponseRedirect(reverse('admin_review'))
 
@@ -990,11 +992,13 @@ def admin_report_delete(request, submitter_email, timestamp):
     user_type = request.session.get('type')
 
     if user_type == 'administrator' and user_email is not False:
+        time = datetime.datetime.strptime(timestamp)
+        time = time.strftime('%Y-%m-%d %H:%M:%S')
 
         with connection.cursor() as cursor:
 
             cursor.execute('DELETE FROM report WHERE submitter = %s AND timestamp = %s', [
-                            submitter_email, timestamp])
+                            submitter_email, time])
 
         return HttpResponseRedirect(reverse('admin_report'))
 

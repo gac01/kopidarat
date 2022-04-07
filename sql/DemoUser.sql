@@ -12,12 +12,14 @@ INSERT INTO joins VALUES ('39', 'bang.jago@bang.jago');
 
 INSERT INTO activity(inviter,activity_name,category,start_date_time,end_date_time,venue,capacity)
 VALUES ('bang.jago@bang.jago','Cycling @ Marina Bay','Sports','2022-03-30 4:00 pm','2022-03-30 6:00 pm', 'Marina Bay','6');
+INSERT INTO joins SELECT a.activity_id, 'bang.jago@bang.jago' FROM activity a WHERE a.activity_name='Cycling @ Marina Bay' AND a.inviter='bang.jago@bang.jago';
 INSERT INTO joins SELECT a.activity_id, 'kjarvis44@imgur.com' FROM activity a WHERE a.activity_name='Cycling @ Marina Bay' AND a.inviter='bang.jago@bang.jago';
 INSERT INTO joins SELECT a.activity_id, 'tczajkowska46@epa.gov' FROM activity a WHERE a.activity_name='Cycling @ Marina Bay' AND a.inviter='bang.jago@bang.jago';
 INSERT INTO joins SELECT a.activity_id, 'lgettins4l@acquirethisname.com' FROM activity a WHERE a.activity_name='Cycling @ Marina Bay' AND a.inviter='bang.jago@bang.jago';
 
 INSERT INTO activity(inviter,activity_name,category,start_date_time,end_date_time,venue,capacity)
 VALUES ('bang.jago@bang.jago','Indonesian Food Hunt','Dining','2022-03-30 4:00 pm','2022-03-30 6:00 pm', 'Kampong Glam','5');
+INSERT INTO joins SELECT a.activity_id, 'bang.jago@bang.jago' FROM activity a WHERE a.activity_name='Cycling @ Marina Bay' AND a.inviter='bang.jago@bang.jago';
 INSERT INTO joins SELECT a.activity_id, 'wde4y@hugedomains.com' FROM activity a WHERE a.activity_name='Cycling @ Marina Bay' AND a.inviter='bang.jago@bang.jago';
 INSERT INTO joins SELECT a.activity_id, 'rmarco56@istockphoto.com' FROM activity a WHERE a.activity_name='Cycling @ Marina Bay' AND a.inviter='bang.jago@bang.jago';
 

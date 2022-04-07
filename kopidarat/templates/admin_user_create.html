@@ -9,11 +9,17 @@
     <title>Create User</title>
   </head>
   <body>
-    <h2>Create new user</h2>
-    <a href="admin_user">Back to list of users</a>
-
+    <div class="container">
+      <div class="form-wrap">
+        <h2>Create new user</h2>
+        <a href="admin_user">Back to list of users</a>
+        <br/>
+        {% if message %}
+        <div>{{ message }}</div>
+        {% endif %}
     <form action="{% url 'admin_user_create' %}" method="post">
       {% csrf_token %}
+      <h4>Full Name</h4>
       <div class="form-group">
         <input
           class="form-control"
@@ -23,6 +29,7 @@
           placeholder="Full Name"
         />
       </div>
+      <h4>Username</h4>
       <div class="form-group">
         <input
           class="form-control"
@@ -32,6 +39,7 @@
           placeholder="Username"
         />
       </div>
+      <h4>Email Address</h4>
       <div class="form-group">
         <input
           class="form-control"
@@ -40,6 +48,7 @@
           placeholder="Email Address"
         />
       </div>
+      <h4>Phone Number</h4>
       <div class="form-group">
         <input
           class="form-control"
@@ -48,6 +57,7 @@
           placeholder="Phone Number"
         />
       </div>
+      <h4>Password</h4>
       <div class="form-group">
         <input
           class="form-control"
@@ -56,14 +66,18 @@
           placeholder="Password"
         />
       </div>
-      User Type
+      <h4>User Type</h4>
       <div class="form-group">
         <select id="type" name="type">
           <option value="member">member</option>
           <option value="administrator">administrator</option>
         </select>
       </div>
-      <input class="btn btn-primary" type="submit" value="Create User" />
+      <input class="btn btn-primary" 
+      type="submit" 
+      value="Create User" />
     </form>
+    </div>
+  </div>
   </body>
 </html>

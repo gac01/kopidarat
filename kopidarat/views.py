@@ -1049,7 +1049,10 @@ def login_view(request):
     '''
     # Check if user is already signed in
     if request.session.get("email", False) is not False:
-        return HttpResponseRedirect(reverse("index"))
+        if request.session["type"] == 'administrator':
+            return HttpResponseRedirect(reverse("admin_index"))
+        else:
+            return HttpResponseRedirect(reverse("index"))
 
     if request.method == "POST":
         # Attempt to sign user in

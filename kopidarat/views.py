@@ -11,7 +11,7 @@ from dateutil.relativedelta import relativedelta
 import datetime
 
 # View Functions for main pages for the member's side of the website
-def index(request,*kwargs):
+def index(request):
     '''
     Index view function responsible for the main page of the website.
     Takes in the request and returns the rendering of the main page.
@@ -24,10 +24,7 @@ def index(request,*kwargs):
     '''
     # Checking if user is logged in
     user_email = request.session.get("email", False)
-    message=''
     empty=True
-    if kwargs:
-        message=''.join(kwargs)
     if user_email is not False:
         with connection.cursor() as cursor:
             cursor.execute("SELECT a.activity_id, u.full_name AS inviter, a.category, a.activity_name, a.start_date_time, a.end_date_time,a.venue, a.capacity, (SELECT COUNT(*) FROM activity a1, joins j1 WHERE j1.activity_id = a1.activity_id AND a.activity_id=a1.activity_id) AS joined FROM activity a, users u WHERE a.inviter = u.email AND a.start_date_time>NOW() AND a.start_date_time - NOW() < '7 days' AND a.category IN (SELECT a2.category FROM joins j2, activity a2 WHERE j2.activity_id = a2.activity_id AND j2.participant= '"+user_email+"' GROUP BY a2.category ORDER BY COUNT(*) DESC LIMIT 3) AND a.activity_id NOT IN (SELECT a3.activity_id FROM activity a3,joins j3 WHERE j3.participant='"+user_email+"' AND j3.activity_id=a3.activity_id) ORDER BY a.start_date_time,a.end_date_time ASC")
@@ -36,8 +33,7 @@ def index(request,*kwargs):
                 empty=False
         
         # Put all the records inside the dictionary context
-        context = {'recommended_activities':recommended_activities,
-        'message':message}
+        context = {'recommended_activities':recommended_activities}
 
         if empty:
             context['empty']=empty
@@ -45,7 +41,7 @@ def index(request,*kwargs):
     else:
         return HttpResponseRedirect(reverse("frontpage"))
 
-def all_activities(request,*kwargs):
+def all_activities(request):
     '''
     Index view function responsible for the main page of the website.
     Takes in the request and returns the rendering of the main page.
@@ -58,9 +54,6 @@ def all_activities(request,*kwargs):
     '''
     # Checking if user is logged in
     user_email = request.session.get("email", False)
-    message=''
-    if kwargs:
-        message=''.join(kwargs)
     if user_email is not False:
         with connection.cursor() as cursor:
             cursor.execute('SELECT * FROM category')
@@ -107,8 +100,12 @@ def all_activities(request,*kwargs):
         # Put all the records inside the dictionary context
         context = {'records' : activities,
         'full_name':request.session.get("full_name"),
-        'categories':categories,
-        'message':message}
+        'categories':categories}
+
+        message = request.session.get('message',False)
+        if message is not False:
+            context['message'] = message
+            del request.session['message']
         return render(request, "all_activities.html", context)
     else:
         return HttpResponseRedirect(reverse("frontpage"))
@@ -244,7 +241,6 @@ def join(request, activity_id):
         HTTP response redirect to the main page. 
     '''
     user_email = request.session.get("email", False)
-    message = ''
 
     if user_email is not False:
 
@@ -258,8 +254,9 @@ def join(request, activity_id):
             except Exception as e:
                 string_message=str(e)
                 message=string_message.split(".",1)[0]+"."
+            request.session["message"]=message
             
-        return all_activities(request,message)
+        return HttpResponseRedirect("/all_activities")
     else:
         HttpResponseRedirect("index")
 
@@ -310,9 +307,8 @@ def user_activity(request):
                 context["inviter_future_list_empty"]=inviter_future_list_empty
 
             # Get the table of upcoming activities created by other user where the user has signed up for
-            cursor.execute('SELECT a.activity_id, u.full_name, a.category, a.activity_name, a.start_date_time, a.end_date_time, a.venue FROM joins j, activity a, users u WHERE j.activity_id = a.activity_id AND a.inviter = u.email AND a.inviter <> j.participant AND j.participant = %s AND NOW() <= a.start_date_time ORDER BY a.start_date_time ASC', [
-                user_email
-            ])
+            cursor.execute('SELECT DISTINCT a.activity_id, u.full_name, a.category, a.activity_name, a.start_date_time, a.end_date_time, a.venue, count_participant.count, a.capacity FROM joins j, activity a, users u, (SELECT j1.activity_id, COUNT(j1.participant) as count FROM activity a1, joins j1 WHERE j1.activity_id = a1.activity_id GROUP BY j1.activity_id) AS count_participant WHERE a.inviter = u.email AND a.inviter<>%s AND count_participant.activity_id = a.activity_id AND j.participant = %s AND j.activity_id = a.activity_id AND NOW() <= a.start_date_time ORDER BY a.start_date_time ASC', [user_email,user_email])
+            
             upcoming_activities_list = cursor.fetchall()
             if len(upcoming_activities_list)>0:
                 joined_future_activities_list_empty=False
@@ -507,7 +503,8 @@ def participants(request, activity_id):
             return render(request, 'participants.html', context)
         else:
             message="You are not registered for this activity, hence you are not authorised to view this page."
-            return index(request,message)
+            request.session['message'] = message
+            return HttpResponseRedirect('/all_activities')
 
     return HttpResponseRedirect(reverse("index"))
 # View functions for the admin side of the website

@@ -580,7 +580,7 @@ def admin_user(request):
         message = request.session.get('message',False)
         if message is not False:
             context['message'] = message
-            del context['message']
+            del request.session['message']
 
         return render(request, 'admin_user.html', context)
     else:
@@ -747,7 +747,6 @@ def admin_user_delete(request, delete_email):
                 print("Check")
                 cursor.execute("DELETE FROM users WHERE email= %s",[delete_email])
                 cursor.execute("DELETE FROM member WHERE email = %s",[delete_email])
-                print("Hooray")
 
         return HttpResponseRedirect(reverse('admin_user'))
     else:

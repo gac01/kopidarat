@@ -174,8 +174,8 @@ def create_review(request,activity_id):
             if request.method == 'POST':
                 try:
                     cursor.execute('INSERT INTO review VALUES (%s,%s,%s,%s,%s)', [
-                                activity_id, datetime.datetime.now(
-                                ), user_email,request.POST['rating'],
+                                activity_id, datetime.datetime.now().strftime('%Y-%m-%d %H:%m'), 
+                                user_email,request.POST['rating'],
                                 request.POST['comment']
                             ])
                 except Exception as e:
@@ -213,7 +213,7 @@ def create_report(request, username):
             with connection.cursor() as cursor:
                 try:
                     cursor.execute('INSERT INTO report VALUES (%s,%s,(SELECT email FROM users WHERE username=%s),%s,%s)', [
-                        user_email, datetime.datetime.now(), username,
+                        user_email, datetime.datetime.now().strftime('%Y-%m-%d %H:%m'), username,
                         request.POST['comment'], request.POST['severity']])
                     cursor.execute('SELECT * FROM users WHERE username=%s', [username])
                     this_participant=cursor.fetchone()
@@ -942,11 +942,12 @@ def admin_review_delete(request, activity_id, timestamp, participant_email):
         else:
             timestamp = timestamp[:-4] + 'PM'
         time = datetime.datetime.strptime(timestamp,'%B %d, %Y, %I:%M %p')
-        time = time.strftime('%Y-%m-%d %H:%M:%S')
+        time = time.strftime('%Y %m %d %H %M')
+        year,month,day,hour,minute = time.split()
         with connection.cursor() as cursor:
 
-            cursor.execute('DELETE FROM review WHERE activity_id = %s AND participant = %s', [
-                activity_id, participant_email])
+            cursor.execute('DELETE FROM review WHERE activity_id = %s AND participant = %s AND EXTRACT(year FROM timestamp) = %s AND EXTRACT(month FROM timestamp) = %s AND EXTRACT(day FROM timestamp) = %s AND EXTRACT(hour FROM timestamp) = %s AND EXTRACT(minute FROM timestamp) = %s',[
+                activity_id, participant_email,year,month,day,hour,minute])
 
         return HttpResponseRedirect(reverse('admin_review'))
 
@@ -999,12 +1000,13 @@ def admin_report_delete(request, submitter_email, timestamp):
         else:
             timestamp = timestamp[:-4] + 'PM'
         time = datetime.datetime.strptime(timestamp,'%B %d, %Y, %I:%M %p')
-        time = time.strftime('%Y-%m-%d %H:%M:%S')
+        time = time.strftime('%Y %m %d %H %M')
+        year,month,day,hour,minute = time.split()
 
         with connection.cursor() as cursor:
 
-            cursor.execute('DELETE FROM report WHERE submitter = %s', [
-                            submitter_email])
+            cursor.execute('DELETE FROM report WHERE submitter = %s AND EXTRACT(year FROM timestamp) = %s AND EXTRACT(month FROM timestamp) = %s AND EXTRACT(day FROM timestamp) = %s AND EXTRACT(hour FROM timestamp) = %s AND EXTRACT(minute FROM timestamp) = %s', [
+                            submitter_email,year,month,day,hour,minute])
 
         return HttpResponseRedirect(reverse('admin_report'))
 

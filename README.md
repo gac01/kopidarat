@@ -1,6 +1,7 @@
 # kopidarat
 
 NUS IT2002: Database Technology and Management Project
+
 Checkout our [website](https://kopidarat.herokuapp.com/)!
 
 Developed a Web-database three-tier application to allow users to find people with same interests to go for activities together. The Python Django Framework is used for developing the website in conjuction with PostgreSQL as the (Relational) Database Management System and HTML/CSS as the front-end.

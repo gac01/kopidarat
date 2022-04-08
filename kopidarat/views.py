@@ -14,13 +14,11 @@ import datetime
 def index(request):
     '''
     Index view function responsible for the main page of the website.
-    Takes in the request and returns the rendering of the main page.
-
-    NOTE: The function for joining events is refactored out for better code clarity. 
+    Takes in the request and returns the rendering of the main page for the user.
     Argument:
         request: HTTP request
     Return:
-        render function: renders the main page (path: '') 
+        render function: renders the main page (path: '/index') 
     '''
     # Checking if user is logged in
     user_email = request.session.get("email", False)
@@ -43,14 +41,12 @@ def index(request):
 
 def all_activities(request):
     '''
-    Index view function responsible for the main page of the website.
-    Takes in the request and returns the rendering of the main page.
-
-    NOTE: The function for joining events is refactored out for better code clarity. 
+    all_activities view function responsible for the all_activities page of the website.
+    Takes in the request and returns the rendering of the all_activities page.
     Argument:
         request: HTTP request
     Return:
-        render function: renders the main page (path: '') 
+        render function: renders the all_actvities page (path: '/all_activities') 
     '''
     # Checking if user is logged in
     user_email = request.session.get("email", False)
@@ -589,11 +585,11 @@ def admin_user(request):
 def admin_inactive_users(request):
     '''
     view function responsible for displaying the list of users who never participated in any activity.
-    Takes in the request and returns the rendering of the admin_user page. 
+    Takes in the request and returns the rendering of the admin_inactive_users page. 
     Argument:
         request: HTTP request
     Return:
-        render function: renders the admin_user page (path: /admin_user)
+        render function: renders the admin_inactive_users page (path: /admin_inactive_users)
     '''
     user_email = request.session.get("email", False)
     user_type = request.session.get('type')
@@ -1023,7 +1019,7 @@ def frontpage(request):
     Argument:
         request: HTTP request
     Return:
-        render function: renders the category_popularity page (path: /category_popularity)
+        render function: renders the frontpage (path: '')
     '''
     user_email = request.session.get("email", False)
     if user_email is not False:
@@ -1123,7 +1119,7 @@ def logout_view(request):
     Argument:
         request: HTTP Request
     Return:
-        HTTP Response Redirect to the frontpage (path: /category_popularity)
+        HTTP Response Redirect to the frontpage (path: '')
     '''
     if "email" in request.session:
         del request.session["email"]
@@ -1173,5 +1169,3 @@ def register(request):
                     message = "Please enter a password."
         context['message'] = message
     return render(request, "register.html", context)
-
-

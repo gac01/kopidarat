@@ -1,7 +1,9 @@
 # kopidarat
 
-NUS IT2002 Project
-Developing a Web-database three-tier application to allow users to find people with same interests to go for activities together. The Python Django Framework is used for developing the website in conjuction with PostgreSQL as the (Relational) Database Management System and HTML5/CSS3 as the front-end.
+NUS IT2002: Database Technology and Management Project
+Checkout our [website](https://kopidarat.herokuapp.com/)!
+
+Developed a Web-database three-tier application to allow users to find people with same interests to go for activities together. The Python Django Framework is used for developing the website in conjuction with PostgreSQL as the (Relational) Database Management System and HTML/CSS as the front-end.
 
 This website contain the following features:
 
@@ -34,8 +36,8 @@ Database Constraints are checked using SQL Database Integrity checks in the sche
 
 For a more in-depth understanding of our SQL queries, SQL schemas, generation of mock data for testing, and general code base, you could look into the following files in this repository:
 
-1. The main rendering functions are implemented under views.py, inside the 'kopidarat' folder.
-2. URLs associated with the rendering functions are implemented under urls.py, inside the 'kopidarat' folder.
+1. The main rendering functions are implemented under 'views.py' with function descriptors, inside the 'kopidarat' folder.
+2. URLs associated with the rendering functions are implemented under 'urls.py', inside the 'kopidarat' folder.
 3. HTML pages are located under the 'templates' folder inside the 'kopidarat' folder.
 4. CSS templates for each of the pages are located under the 'static' folder inside the 'kopidarat' folder.
 5. SQL schemas, mock data, procedures, functions, triggers, deleting contents, and dropping tables are inside the 'sql' folder.

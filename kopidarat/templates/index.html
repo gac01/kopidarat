@@ -2,42 +2,48 @@
 <link rel="stylesheet" type="text/css" href="{% static 'index.css' %}" />
 <html>
   <head>
-    <title> Welcome to KopiDarat! </title>
+    <title>Welcome to KopiDarat!</title>
   </head>
   <body>
-
-    <br/><br>
+    <br /><br />
     <table border="1">
       <thead>
         <th><a href="{% url 'all_activities' %}">All Activities</a></th>
         <th><a href="{% url 'create_activity' %}"> New Activity </a></th>
         <th><a href="{% url 'user_activity' %}"> Your Activities </a></th>
-         <th><a href="{% url 'logout' %}"> Logout </a></th>
+        <th><a href="{% url 'logout' %}"> Logout </a></th>
       </thead>
     </table>
-    <h2> Recommended For You</h2>
+    <h2>Recommended For You</h2>
 
     {% if message %}
-      <div>{{message}}</div>
+    <div>{{message}}</div>
     {% endif %}
-    <br/>
-    
-    {% if empty %}
-    We cannot recommend any upcoming activities for you at this moment. Hop on to All Activities and join more activities so we can get to know your taste better!
-    {% else %}
+    <br />
+
+    {% if empty %} We cannot recommend any upcoming activities for you at this
+    moment. Hop on to All Activities and join more activities so we can get to
+    know your taste better! {% else %}
     <div class="table-wrap">
       <table>
         {% for activity in recommended_activities %}
         <tr>
-          <td class="overflow_td"> 
+          <td class="overflow_td">
             <h2>{{ activity.3 }}</h2>
             <h3>{{ activity.6 }}</h3>
             <h4>{{ activity.4 }} - {{ activity.5 }}</h4>
-            Organized by {{ activity.1 }}<br/>
-            Enrolled: {{ activity.8 }}/{{ activity.7 }}<br/>
-            <br>
-            Category: {{ activity.2 }}<br/>
-            <button><a class="button" href="{% url 'join' activity.0 %}" class="text-decoration-none">Join</a></button>
+            Organized by {{ activity.1 }}<br />
+            Enrolled: {{ activity.8 }}/{{ activity.7 }}<br />
+            <br />
+            Category: {{ activity.2 }}<br />
+            <button>
+              <a
+                class="button"
+                href="join/{{activity.0}}"
+                class="text-decoration-none"
+                >Join</a
+              >
+            </button>
           </td>
         </tr>
         {% endfor %}
